@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Document Manager | CorpAssistant</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/upload.css' %}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>Document Manager</h1>
+
+            <p>
+                Upload and manage company documents used by the AI Assistant.
+            </p>
+
+        </div>
+
+        <a href="{% url 'admin_dashboard' %}" class="dashboard-btn">
+
+            ← Dashboard
+
+        </a>
+
+    </div>
+
+
+    <!-- Upload Card -->
+
+    <div class="upload-card">
+
+        <h2>Upload New Document</h2>
+
+        <form method="POST"
+              enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+
+                <label for="{{ form.title.id_for_label }}">
+
+                    Document Title
+
+                </label>
+
+                {{ form.title }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="{{ form.file.id_for_label }}">
+
+                    Select PDF
+
+                </label>
+
+                {{ form.file }}
+
+            </div>
+
+            <button type="submit"
+                    class="upload-btn">
+
+                Upload Document
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Documents -->
+
+    <div class="documents-card">
+
+        <div class="table-header">
+
+            <h2>Uploaded Documents</h2>
+
+            <form method="GET" class="search-form">
+
+                <input
+                    type="text"
+                    name="search"
+                    class="search-input"
+                    placeholder="Search documents..."
+                    value="{{ search_query }}"
+                >
+
+                <button
+                    type="submit"
+                    class="search-btn">
+
+                    Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Title</th>
+
+                    <th>Uploaded</th>
+
+                    <th>Download</th>
+
+                    <th>Delete</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for document in documents %}
+
+                <tr>
+
+                    <td>
+
+                        {{ document.title }}
+
+                    </td>
+
+                    <td>
+
+                        {{ document.uploaded_at|date:"d M Y" }}
+
+                    </td>
+
+                    <td>
+
+                        <a href="{{ document.file.url }}"
+                           class="download-btn"
+                           target="_blank">
+
+                            Download
+
+                        </a>
+
+                    </td>
+
+                    <td>
+
+                        <a href="{% url 'delete_document' document.id %}"
+                           class="delete-btn"
+                           onclick="return confirm('Delete this document?');">
+
+                            Delete
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            {% empty %}
+
+                <tr>
+
+                    <td colspan="4"
+                        class="empty">
+
+                        No documents found.
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

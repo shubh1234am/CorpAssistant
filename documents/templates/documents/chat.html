@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/chat.css' %}">
+
+<div class="chat-layout">
+
+    <!-- ========================= SIDEBAR ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+
+            <!-- Logo -->
+            <div class="logo">
+
+                <div class="logo-icon">
+                    🤖
+                </div>
+
+                <div class="logo-text">
+                    <h2>Corp<span>Assistant</span></h2>
+                    <small>AI Knowledge Assistant</small>
+                </div>
+
+            </div>
+
+            <!-- New Chat -->
+
+            <button class="new-chat-btn" id="newChatBtn">
+
+                <span>＋</span>
+                <span>New Chat</span>
+
+            </button>
+
+            <!-- ================= CHAT HISTORY ================= -->
+
+            <div class="history-section">
+
+                <h4>Recent Chats</h4>
+
+                <ul class="history-list" id="historyList">
+
+                    {% for conversation in conversations %}
+
+                    <li class="{% if current_conversation and conversation.id == current_conversation.id %}active{% endif %}">
+
+                        <a href="{% url 'conversation' conversation.id %}">
+
+                            {{ conversation.title }}
+
+                        </a>
+
+                    </li>
+
+                    {% empty %}
+
+                    <li>No chats yet</li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <!-- ================= USER ================= -->
+
+        <div class="sidebar-bottom">
+
+            <div class="profile">
+
+                <div class="avatar">
+
+                    {{ request.user.username|first|upper }}
+
+                </div>
+
+                <div class="profile-info">
+
+                    <h5>{{ request.user.username }}</h5>
+
+                    <span>Online</span>
+
+                </div>
+
+            </div>
+
+            <a href="{% url 'logout' %}" class="logout-btn">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- ========================= MAIN CHAT ========================= -->
+
+    <main class="main-chat">
+
+        <!-- Header -->
+
+        <header class="chat-header">
+
+            <div>
+
+                <h1>
+                    Welcome Back 👋
+                </h1>
+
+                <p>
+                    Your CorpAssistant is here.
+                </p>
+
+            </div>
+
+        </header>
+
+        <!-- ================= CHAT BODY ================= -->
+
+        <section class="chat-body" id="chatBody">
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    {% if message.sender == "user" %}
+
+                        <div class="message user-message">
+
+                            <div class="message-box">
+
+                                <div class="message-text">
+
+                                    {{ message.content }}
+
+                                </div>
+
+                                <div class="message-footer">
+
+                                    <span>{{ message.created_at|date:"g:i A" }}</span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="message ai-message">
+
+                            <div class="message-avatar">
+
+                                🤖
+
+                            </div>
+
+                            <div class="message-box">
+
+                                <div class="message-text">
+
+                                    {{ message.content }}
+
+                                </div>
+
+                                <div class="message-footer">
+
+                                    <span>{{ message.created_at|date:"g:i A" }}</span>
+
+                                    <button class="copy-btn">
+
+                                        Copy
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="welcome-container" id="welcomeScreen">
+
+                    <div class="welcome-icon">
+
+                        🤖
+
+                    </div>
+
+                    <h2>
+
+                        Welcome to CorpAssistant
+
+                    </h2>
+
+                    <p>
+
+                        Start chatting with your AI assistant.
+
+                        Ask questions about resumes,
+
+                        company documents,
+
+                        HR policies,
+
+                        project files,
+
+                        or any uploaded knowledge base.
+
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+        <!-- ================= INPUT ================= -->
+
+        <footer class="chat-footer">
+
+            <form class="chat-form" id="chatForm">
+
+                {% csrf_token %}
+
+                <input
+                    type="hidden"
+                    id="conversationId"
+                    value="{% if current_conversation %}{{ current_conversation.id }}{% endif %}"
+                >
+
+                <input
+
+                    type="text"
+
+                    id="messageInput"
+
+                    name="question"
+
+                    placeholder="Your CorpAssistant is here..."
+
+                    autocomplete="off"
+
+                    required
+
+                >
+
+                <button type="submit" id="sendButton">
+
+                    Send
+
+                </button>
+
+            </form>
+
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="{% static 'js/chat.js' %}"></script>
+
+{% endblock %}

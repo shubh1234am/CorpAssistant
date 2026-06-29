@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <!-- Left Column: Branding & Info -->
+    <div class="brand-section">
+        <div class="logo">
+            <span class="bot-icon">🤖</span>
+            <span class="logo-text">Corp<span class="accent-text">Assistant</span></span>
+        </div>
+        
+        <h1 class="main-heading">Your Company<br>Knowledge Assistant</h1>
+        
+        <p class="brand-subtitle">
+            Ask questions. Get answers.<br>Boost productivity.
+        </p>
+
+        <!-- Illustration Graphic Placeholder matching the layout -->
+        <div class="graphic-container">
+            <div class="doc-icon-wrapper">
+                <div class="chat-bubble">•••</div>
+                <div class="doc-sheet"></div>
+                <div class="search-glass">🔍</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Login Card -->
+    <div class="card-section">
+        <div class="auth-card">
+            <h2>Welcome Back</h2>
+            <p class="card-subtitle">Login to your account</p>
+            <div class="title-divider"></div>
+
+            <form method="post">
+                {% csrf_token %}
+                
+                {# Django form rendering logic #}
+                {% for field in form %}
+                    <div class="input-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        <div class="input-wrapper">
+                            {% if "username" in field.name or "email" in field.name %}
+                                <span class="input-icon">👤</span>
+                            {% elif "password" in field.name %}
+                                <span class="input-icon">🔒</span>
+                            {% endif %}
+                            
+                            {{ field }}
+
+                            {% if "password" in field.name %}
+                                <button type="button" class="password-toggle" onclick="togglePasswordVisibility('{{ field.id_for_label }}', this)">
+                                    <svg class="eye-icon open-eye" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                    </svg>
+                                    <svg class="eye-icon closed-eye hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 1-4.243-4.243m4.242 4.242L9.88 9.88" />
+                                    </svg>
+                                </button>
+                            {% endif %}
+                        </div>
+                        {% if field.errors %}
+                            <span class="field-error">{{ field.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+                {% empty %}
+                    {# Fallback if form variables are not yet bound #}
+                    <div class="input-group">
+                        <label for="fallback-username">Username</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">👤</span>
+                            <input type="text" id="fallback-username" placeholder="Enter your username">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="fallback-password">Password</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" id="fallback-password" placeholder="Enter your password">
+                            <button type="button" class="password-toggle" onclick="togglePasswordVisibility('fallback-password', this)">
+                                <svg class="eye-icon open-eye" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                </svg>
+                                <svg class="eye-icon closed-eye hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 1-4.243-4.243m4.242 4.242L9.88 9.88" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember"> Remember me
+                    </label>
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <span class="btn-icon">🔒</span> Login
+                </button>
+            </form>
+
+            <div class="divider-text">or</div>
+
+            <p class="bottom-text">
+                Don't have an account? <a href="{% url 'signup' %}">Sign Up</a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Background Bottom-Left Wave Decor -->
+    <div class="bottom-wave"></div>
+    <div class="bottom-wave-overlay"></div>
+    
+    <!-- Footer -->
+    <footer class="auth-footer">
+        © 2026 <span class="footer-accent">CorpAssistant</span>. All rights reserved.
+    </footer>
+</div>
+
+<script>
+function togglePasswordVisibility(fieldId, toggleButton) {
+    const passwordInput = document.getElementById(fieldId);
+    const openEye = toggleButton.querySelector('.open-eye');
+    const closedEye = toggleButton.querySelector('.closed-eye');
+    
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleButton.classList.add('active');
+        openEye.classList.add('hidden');
+        closedEye.classList.remove('hidden');
+    } else {
+        passwordInput.type = "password";
+        toggleButton.classList.remove('active');
+        openEye.classList.remove('hidden');
+        closedEye.classList.add('hidden');
+    }
+}
+</script>
+{% endblock %}

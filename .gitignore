@@ -1,0 +1,24 @@
+# Virtual Environment
+venv/
+
+# SQLite Database
+db.sqlite3
+
+# Uploaded PDFs
+media/
+
+# Chroma Vector Database
+chroma_storage/
+
+# Collected Static
+staticfiles/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+
+# VS Code
+.vscode/
+
+# Environment
+.env

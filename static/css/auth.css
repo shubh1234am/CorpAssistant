@@ -1,0 +1,366 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #1e293b;
+    overflow-x: hidden;
+}
+
+/* Base wrapper structure with explicit top/bottom safe spaces to prevent edge-touching */
+.auth-wrapper {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    padding: 50px 8% 70px 8%; /* Fixed top padding ensures cards never touch browser tabs */
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    background: linear-gradient(135deg, rgba(124, 224, 0, 0.05) 0%, #ffffff 50%);
+}
+
+/* --- Left Branding Column --- */
+.brand-section {
+    width: 48%;
+    z-index: 2;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 26px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 35px;
+}
+
+.bot-icon {
+    font-size: 28px;
+    margin-right: 10px;
+}
+
+.accent-text {
+    color: #7CE000;
+}
+
+.main-heading {
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #1e293b;
+    margin-bottom: 18px;
+}
+
+.brand-subtitle {
+    font-size: 16px;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.graphic-container {
+    position: relative;
+    width: 200px;
+    height: 120px;
+}
+.doc-icon-wrapper {
+    position: relative;
+    width: 90px;
+    height: 110px;
+    background: #ffffff;
+    border: 2px solid #1e293b;
+    border-radius: 12px;
+}
+.chat-bubble {
+    position: absolute;
+    top: -20px;
+    left: -35px;
+    background: white;
+    border: 2px solid #1e293b;
+    border-radius: 12px;
+    padding: 4px 12px;
+    color: #7CE000;
+    font-weight: bold;
+    font-size: 14px;
+}
+.search-glass {
+    position: absolute;
+    bottom: 5px;
+    right: -20px;
+    font-size: 26px;
+    color: #7CE000;
+}
+
+/* --- Right Column Card Frame (Resized and Protected against Vertical Stretching) --- */
+.card-section {
+    width: 42%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 350px; /* Reduced from 380px to make it beautifully compact and perfectly proportioned */
+    background: #ffffff;
+    padding: 24px 28px; /* Compact padding keeps the card brief and isolated from outer edges */
+    border-radius: 16px;
+    
+    /* Vibrant border and glowing layout properties from your screenshot */
+    border: 2px solid #7CE000; 
+    box-shadow: 0 0 15px rgba(124, 224, 0, 0.25), 0 4px 20px rgba(0, 0, 0, 0.03);
+    
+    text-align: center;
+}
+
+.auth-card h2 {
+    font-size: 22px; /* Marginally scaled down to optimize internal layout height */
+    color: #1e293b;
+    margin-bottom: 2px;
+}
+
+.card-subtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 6px;
+}
+
+.title-divider {
+    width: 30px;
+    height: 3px;
+    background-color: #7CE000;
+    margin: 0 auto 18px auto; /* Brought closer together to save card height */
+    border-radius: 2px;
+}
+
+/* --- Tighter, Optimized Form Fields --- */
+.input-group {
+    text-align: left;
+    margin-bottom: 12px; /* Tightened from 16px to prevent expanding vertically */
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    color: #94a3b8;
+    font-size: 14px;
+    z-index: 4;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 9px 12px 9px 38px; /* Balanced inner height */
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input-wrapper input:focus {
+    border-color: #7CE000;
+    box-shadow: 0 0 0 3px rgba(124, 224, 0, 0.15);
+}
+
+/* --- Links & Options --- */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    margin-bottom: 16px;
+}
+
+.remember-me {
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.forgot-link {
+    color: #7CE000;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+/* --- Button Frame Fixes --- */
+.btn-primary {
+    width: 100%;
+    padding: 10px 12px; /* Compact desktop scale */
+    border-radius: 8px;
+    background: #7CE000;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #6bc200;
+}
+
+/* --- Separator Line --- */
+.divider-text {
+    margin: 12px 0;
+    color: #94a3b8;
+    font-size: 12px;
+    position: relative;
+}
+
+.divider-text::before, .divider-text::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 42%;
+    height: 1px;
+    background: #e2e8f0;
+}
+.divider-text::before { left: 0; }
+.divider-text::after { right: 0; }
+
+.bottom-text {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.bottom-text a {
+    color: #7CE000;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.bottom-text a:hover {
+    text-decoration: underline;
+}
+
+/* --- Sticky Global Footer Fixed Separation --- */
+.auth-footer {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #94a3b8;
+    z-index: 10;
+}
+
+.footer-accent {
+    color: #7CE000;
+    font-weight: 500;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 900px) {
+    .auth-wrapper {
+        flex-direction: column;
+        padding: 40px 20px 80px 20px;
+        justify-content: center;
+        gap: 25px;
+    }
+    .brand-section, .card-section {
+        width: 100%;
+        max-width: 350px;
+    }
+    .graphic-container {
+        display: none;
+    }
+}
+
+/* --- Error Messages Positioning --- */
+.field-error {
+    display: block;
+    color: #ef4444;
+    font-size: 11px;
+    margin-top: 3px;
+    font-weight: 500;
+}
+
+/* Django Fallback Inputs styling matching the primary rules */
+.input-wrapper select, 
+.input-wrapper textarea {
+    width: 100%;
+    padding: 9px 12px 9px 38px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* --- Password Toggle SVG Placement Styles --- */
+.input-wrapper input[type="password"],
+.input-wrapper input[type="text"] {
+    padding-right: 42px !important; /* Forces input text to wrap clean of the SVG toggle eye */
+}
+
+.password-toggle {
+    position: absolute;
+    right: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    z-index: 5;
+    padding: 0;
+}
+
+/* SVG Graphic Elements defaults */
+.eye-icon {
+    width: 18px;
+    height: 18px;
+    color: #94a3b8; 
+    transition: color 0.2s ease;
+}
+
+.password-toggle:hover .eye-icon {
+    color: #64748b;
+}
+
+/* Changes SVG stroke to KPIT Green when Password reveals */
+.password-toggle.active .eye-icon {
+    color: #7CE000; 
+    filter: drop-shadow(0 0 2px rgba(124, 224, 0, 0.3));
+}
+
+.eye-icon.hidden {
+    display: none !important;
+}

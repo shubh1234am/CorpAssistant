@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | CorpAssistant</title>
+
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+
+    <div class="header">
+
+        <h1>CorpAssistant</h1>
+
+        <p>
+            Enterprise Knowledge Management Portal
+        </p>
+
+    </div>
+
+
+    <!-- Welcome -->
+
+    <div class="welcome">
+
+        <h2>
+            Welcome back, {{ request.user.username }} 👋
+        </h2>
+
+        <p>
+            Manage company documents, monitor AI knowledge and keep your
+            enterprise information organized from one dashboard.
+        </p>
+
+    </div>
+
+
+    <!-- Statistics -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <h3>{{ document_count }}</h3>
+
+            <p>Total Documents</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>{{ conversation_count }}</h3>
+
+            <p>AI Conversations</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>{{ recent_documents|length }}</h3>
+
+            <p>Recent Uploads</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Action Cards -->
+
+    <div class="cards">
+
+        <a href="{% url 'upload_document' %}" class="card">
+
+            <div class="icon">📄</div>
+
+            <h3>Document Manager</h3>
+
+            <p>
+                Upload, download and delete company documents.
+            </p>
+
+        </a>
+
+
+        <a href="{% url 'chat' %}" class="card">
+
+            <div class="icon">🤖</div>
+
+            <h3>AI Assistant</h3>
+
+            <p>
+                Ask questions using your company knowledge base.
+            </p>
+
+        </a>
+
+
+        <a href="{% url 'logout' %}" class="card logout">
+
+            <div class="icon">🚪</div>
+
+            <h3>Logout</h3>
+
+            <p>
+                Securely sign out of CorpAssistant.
+            </p>
+
+        </a>
+
+    </div>
+
+
+    <!-- Recent Uploads -->
+
+    <div class="recent-section">
+
+        <div class="section-header">
+
+            <h2>Recent Uploads</h2>
+
+            <a href="{% url 'upload_document' %}">
+                View All →
+            </a>
+
+        </div>
+
+
+        {% for document in recent_documents %}
+
+        <div class="recent-item">
+
+            <div>
+
+                <strong>{{ document.title }}</strong>
+
+                <p>
+
+                    Uploaded on
+
+                    {{ document.uploaded_at|date:"d M Y - h:i A" }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="empty">
+
+            No documents uploaded yet.
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
