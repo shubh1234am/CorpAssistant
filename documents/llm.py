@@ -1,9 +1,19 @@
-import requests
+import os
+
+from groq import Groq
+from dotenv import load_dotenv
+
+# Load .env file
+load_dotenv()
+
+client = Groq(
+    api_key=os.getenv("GROQ_API_KEY")
+)
 
 
 def ask_llm(context, question):
     """
-    Send context and question to Ollama.
+    Send context and question to Groq.
     """
 
     prompt = f"""
@@ -24,13 +34,15 @@ Question:
 Answer:
 """
 
-    response = requests.post(
-        "http://localhost:11434/api/generate",
-        json={
-            "model": "llama3.2:latest",
-            "prompt": prompt,
-            "stream": False,
-        },
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        temperature=0
     )
 
-    return response.json()["response"]
+    return response.choices[0].message.content

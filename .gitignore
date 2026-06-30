@@ -1,24 +1,72 @@
-# Virtual Environment
-venv/
-
-# SQLite Database
-db.sqlite3
-
-# Uploaded PDFs
-media/
-
-# Chroma Vector Database
-chroma_storage/
-
-# Collected Static
-staticfiles/
-
-# Python Cache
+# ==========================
+# Python
+# ==========================
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 
-# VS Code
-.vscode/
+# ==========================
+# Virtual Environment
+# ==========================
+venv/
+env/
+.venv/
 
-# Environment
+# ==========================
+# Environment Variables
+# ==========================
 .env
+
+# ==========================
+# SQLite Database
+# ==========================
+db.sqlite3
+
+# ==========================
+# Uploaded Files
+# ==========================
+media/
+
+# ==========================
+# ChromaDB Storage
+# ==========================
+chroma_storage/
+
+# ==========================
+# Collected Static Files
+# ==========================
+staticfiles/
+
+# ==========================
+# IDE Settings
+# ==========================
+.vscode/
+.idea/
+
+# ==========================
+# OS Files
+# ==========================
+.DS_Store
+Thumbs.db
+
+# ==========================
+# Log Files
+# ==========================
+*.log
+
+# ==========================
+# Pytest Cache
+# ==========================
+.pytest_cache/
+
+# ==========================
+# Mypy Cache
+# ==========================
+.mypy_cache/
+
+# ==========================
+# Coverage Reports
+# ==========================
+.coverage
+htmlcov/
